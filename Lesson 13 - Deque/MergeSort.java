@@ -7,7 +7,7 @@ package linked_list_deque;
 
 /**
  *
- * @author admin
+ * @author Akzhol
  */
 public class MergeSort {
     
