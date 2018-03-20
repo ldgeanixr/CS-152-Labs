@@ -32,7 +32,7 @@ public class BST2Set<T extends Comparable> implements Set<T> {
         OnOffTreeNode<T> node = root;
         size++;
         
-        while (1==1)
+        while (1==1) // "infinite" iteration
         {
             // onTheRight?       
             if (value.compareTo(node.getValue())>0)
@@ -70,13 +70,9 @@ public class BST2Set<T extends Comparable> implements Set<T> {
         
         OnOffTreeNode<T> node = root;
         
-        while (1==1)
+        while (node!=null)
         {
-            if (node == null)
-            {
-               return false;
-            }
-        
+            
             if (value.compareTo(node.getValue())>0)
             {
                 node = node.getRight();
@@ -99,6 +95,8 @@ public class BST2Set<T extends Comparable> implements Set<T> {
                 
             }
         }
+        
+        return false;
         
     }
 
@@ -140,38 +138,39 @@ public class BST2Set<T extends Comparable> implements Set<T> {
 
     @Override
     public T removeAny() throws Exception {
+       
+        if (size==0)
+        {
+            throw new Exception("EMPTY SET");
+        }
         
-          if (size==0)
-          {
-              throw new Exception("empty");
-          }
-          OnOffTreeNode<T> node = root;
-          
-          T result = removeAnyHelper(root);
-          return result;
+        T value = removeAnyHelper(root);
+        remove(value);
+        return value;
     }
     
-    // internet based solution
+
     private T removeAnyHelper(OnOffTreeNode<T> node)
     {
-            if (node == null) {
+        if (node==null)
+        {
             return null;
-            }
- 
-            if (node.getActive()) { 
-            size--;
-            node.setActive(false);
+        }
+        
+        if (node.getActive()==true)
+        {
             return node.getValue();
-            }
- 
-            T removedNode = removeAnyHelper (node.getLeft());
- 
-            if (removedNode != null)
-                return removedNode;
-            else
-                return removeAnyHelper(node.getRight());
-            
-            
+        }
+        
+        T temp = removeAnyHelper(node.getRight());
+        
+        if (temp==null)
+        {
+            return removeAnyHelper(node.getLeft());
+        }
+        
+        return temp;
+          
     }
     
 
